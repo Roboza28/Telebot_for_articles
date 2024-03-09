@@ -90,15 +90,3 @@ def create_db() -> None:
 
     with sqlite3.connect(PATH_TO_DB_FILE):
         pass
-
-
-if __name__ == '__main__':
-    # us1 = User('Владислав', 'Лухнов', 'alters_raindrop')
-    # table_name1 = create_name_table_for_user('12345')
-    # table_name1 = 123456
-    # print(read_articles_in_db(table_name1))
-    # # print(write_article_in_db('https1245', table_name1))
-    # print(write_article_in_db('https124567', table_name1))
-    # print(get_random_article_from_db(table_name1))
-    # pass
-    create_db()

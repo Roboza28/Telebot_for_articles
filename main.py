@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from settings import TOKEN
-import telebot
-
-from src.bin.Exceptions import decorator_exceptions
 from src.bin.storage import get_random_article_from_db, write_article_in_db
 from src.bin.msg_for_user import TEXT_WELCOME, TEXT_HELP
+from src.bin.Exceptions import decorator_exceptions
 from src.bin.service import get_article_address
+from settings import TOKEN
 from telebot import types
+import telebot
 
 bot = telebot.TeleBot(TOKEN)
 
