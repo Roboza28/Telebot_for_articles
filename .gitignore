@@ -166,4 +166,4 @@ test.py
 test1.py
 *.db
 src/bin/class*
-
+storage_old.py

@@ -11,6 +11,7 @@ bot = telebot.TeleBot(TOKEN)
 
 
 @bot.message_handler(commands=['start', 'help'])
+@decorator_exceptions
 def start(message: types.Message) -> None:
     if message.text == '/start':
         bot.send_message(message.chat.id, TEXT_WELCOME)
@@ -19,12 +20,14 @@ def start(message: types.Message) -> None:
 
 
 @bot.message_handler(commands=['get_article'])
+@decorator_exceptions
 def get_article(message: types.Message) -> None:
     random_article = get_random_article_from_db(message.from_user.id)
     bot.send_message(message.chat.id, random_article)
 
 
 @bot.message_handler()
+@decorator_exceptions
 def parce_text_message(message: types.Message) -> None:
     if message.text.find("http") != -1:
         article_address = get_article_address(message.text)
