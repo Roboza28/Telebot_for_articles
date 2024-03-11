@@ -165,5 +165,5 @@ private.py
 test.py
 test1.py
 *.db
-src/bin/class*
+class*
 storage_old.py

@@ -1,44 +1,24 @@
 # -*- coding: utf-8 -*-
-from src.bin.storage import get_random_article_from_db, write_article_in_db
-from src.bin.msg_for_user import TEXT_WELCOME, TEXT_HELP
-from src.bin.Exceptions import decorator_exceptions
-from src.bin.service import get_article_address
-from settings import TOKEN
-from telebot import types
-import telebot
+import asyncio
+import logging
 
-bot = telebot.TeleBot(TOKEN)
+from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums.parse_mode import ParseMode
+from aiogram.fsm.storage.memory import MemoryStorage
 
-
-@bot.message_handler(commands=['start', 'help'])
-@decorator_exceptions
-def start(message: types.Message) -> None:
-    if message.text == '/start':
-        bot.send_message(message.chat.id, TEXT_WELCOME)
-
-    bot.send_message(message.chat.id, TEXT_HELP)
+import config
+from src.bin.bot.handlers import router
 
 
-@bot.message_handler(commands=['get_article'])
-@decorator_exceptions
-def get_article(message: types.Message) -> None:
-    random_article = get_random_article_from_db(message.from_user.id)
-    bot.send_message(message.chat.id, random_article)
+async def main():
+    bot = Bot(token=config.TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    dp = Dispatcher(storage=MemoryStorage())
+    dp.include_router(router)
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 
-@bot.message_handler()
-@decorator_exceptions
-def parce_text_message(message: types.Message) -> None:
-    if message.text.find("http") != -1:
-        article_address = get_article_address(message.text)
-        info_about_writing = write_article_in_db(article_address, message.from_user.id)
-        bot.send_message(message.chat.id, info_about_writing)
-
-
-@decorator_exceptions
-def main() -> None:
-    bot.polling(none_stop=True)
-
-
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    asyncio.run(main())
