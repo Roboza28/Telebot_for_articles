@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
+from aiogram.client.default import DefaultBotProperties
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.enums.parse_mode import ParseMode
+from src.bin.bot.handlers import router
+from aiogram import Bot, Dispatcher
 import asyncio
 import logging
-
-from aiogram import Bot, Dispatcher
-from aiogram.client.default import DefaultBotProperties
-from aiogram.enums.parse_mode import ParseMode
-from aiogram.fsm.storage.memory import MemoryStorage
-
 import config
-from src.bin.bot.handlers import router
 
 
 async def main():

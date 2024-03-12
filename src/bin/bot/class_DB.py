@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
-# from src.bin.Exceptions import decorator_exceptions
-# from src.bin.text import TEXT_IF_ARTICLE_INCLUDE_IN_DB, TEXT_IF_ARTICLE_ALREADY_EXIST, TEXT_IF_STORAGE_EMPTY
-import numpy as np
-import pandas as pd
+from src.bin.text import TEXT_IF_ARTICLE_INCLUDE_IN_DB, TEXT_IF_ARTICLE_ALREADY_EXIST, TEXT_IF_STORAGE_EMPTY
 from sqlalchemy import create_engine
 from sqlalchemy import URL
-import config
-# from sqlalchemy import create_engine
-# from sqlalchemy import URL
-# import pandas as pd
-# import numpy as np
+import pandas as pd
+import numpy as np
 import psycopg2
-
-from src.bin.text import TEXT_IF_ARTICLE_INCLUDE_IN_DB, TEXT_IF_ARTICLE_ALREADY_EXIST, TEXT_IF_STORAGE_EMPTY
+import config
 
 
 class DataBase:
@@ -73,7 +66,6 @@ class DataBase:
         self.query(f"CREATE TABLE {self.user_table_name}(articles VARCHAR)")
 
     def change_type_column(self) -> None:
-        # self.query(f"CREATE TABLE {self.user_table_name}(articles VARCHAR)")
         self.query(f"ALTER TABLE {self.user_table_name} ALTER COLUMN {config.NAME_COLUMN_TABLES_IN_DB} TYPE varchar;")
 
     def get_type_column(self) -> str:
@@ -150,22 +142,3 @@ class DataBase:
 
             return f'\nВы хотели прочитать:\n{popped_row.to_string(header=False, index=False)}' \
                    f'\nСамое время это сделать!'
-
-
-if __name__ == "__main__":
-    a = DataBase(123)
-    # print(a.read_articles_in_db())
-    a.write_article_in_db('https5')
-    # a.write_article_in_db('https3')
-    # print(a.read_articles_in_db())
-    # a.get_connection(config.DB_NAME)
-    # a.create_table_in_db()
-    # a.close_db()
-    # print(a.get_random_article_from_db())
-    a.get_connection(config.DB_NAME)
-    a.get_connection(config.DB_NAME)
-    a.get_connection(config.DB_NAME)
-    a.get_connection(config.DB_NAME)
-    print(a.get_connection(config.DB_NAME))
-    print(a.read_articles_in_db())
-    # print(a.change_type_column())
